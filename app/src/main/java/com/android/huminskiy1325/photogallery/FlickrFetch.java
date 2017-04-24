@@ -32,9 +32,10 @@ public class FlickrFetch {
 
     private static final String XML_PHOTO = "photo";
 
+
     private static final String TAG = "FlickrFetch";
 
-    private byte[] getUrlBytes(String urlSpec) throws IOException {
+    public byte[] getUrlBytes(String urlSpec) throws IOException {
         URL url = new URL(urlSpec);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
@@ -62,12 +63,13 @@ public class FlickrFetch {
         return new String(getUrlBytes(urlSpec));
     }
 
-    public List<GalleryItem> fetchItem() {
-        List<GalleryItem> items = new ArrayList<>();
+    public ArrayList<GalleryItem> fetchItem(Integer page) {
+        ArrayList<GalleryItem> items = new ArrayList<>();
         try {
             String url = Uri.parse(ENDPOINT).buildUpon()
                     .appendQueryParameter("method", METHOD_GET_RECENT) //кодирует строки запросов
                     .appendQueryParameter("api_key", API_KEY)
+                    .appendQueryParameter("page", page.toString())
                     .appendQueryParameter(PARAM_EXTRAS, EXTRA_SMALL_URL)
                     .build().toString();
             String xmlString = getUrl(url);
@@ -89,7 +91,7 @@ public class FlickrFetch {
         return items;
     }
 
-    void parseItems(List<GalleryItem> items, XmlPullParser parser) throws XmlPullParserException, IOException {
+    void parseItems(ArrayList<GalleryItem> items, XmlPullParser parser) throws XmlPullParserException, IOException {
         int evenType = parser.next();
 
         while (evenType != XmlPullParser.END_DOCUMENT) {
