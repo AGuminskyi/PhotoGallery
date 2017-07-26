@@ -5,12 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by cubru on 14.04.2017.
  */
 
-public abstract class SingleFragmenActivity extends FragmentActivity {
+public abstract class SingleFragmenActivity extends AppCompatActivity {
     protected abstract Fragment createFragment();
 
     protected int getLauoutResId() {
